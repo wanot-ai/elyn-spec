@@ -23,7 +23,7 @@ Application *MUST* follow this sequence when processing Character Card if elemen
 1. `creation_date`
 2. `modification_date`
 
-# Global Variables
+# Define
 
 `ext_list` - List of compatible file extensions.
 
@@ -209,7 +209,7 @@ Where the each assets would be used is determined by the `type` field.
 
 This *MUST NOT* taken to mean that the application must support these features. The application *MAY* ignore the assets if the application does not support the feature that the asset is used for, determined by the `type` field.
 
-`name` field *MUST* be a string. this field *MAY* be used to identify the asset. this field *SHOULD NOT* be used on prompt engining. if `type` is `emotion`, `name` *SHOULD* be used to identify the emotion like `happy`, `sad`, `angry` etc, and use element that `type` is `neutral` for default if it exists, if the application supports emotions. if `type` is `user_icon`, `name` *SHOULD* be used as a name of the user. if `type` is `icon`, and `name` is `main`, the application *MUST* use the asset as the main icon of the character card if icon is supported on the application. if there is more then one elements with `type` field is `icon`, there *MUST* be one element with `name` field is `main`, this *MUST NOT* be less or more than one. if `type` is `background`, and `name` is `main`, the application *MUST* use the asset as the main background of the character card if background is supported on the application. if there is more then one elements with `type` field is `background`, there *MUST* not be more than one element with `name` field is `main` with `background` type. if there is no element with `name` field is `main` with `background` type, the application *SHOULD* use the first element with `background` type as the main background.
+`name` field *MUST* be a string. this field *MUST* be used to identify the asset. this field *MUST NOT* be used on prompt engining. if `type` is `emotion`, `name` *SHOULD* be used to identify the emotion like `happy`, `sad`, `angry` etc, and use element that `type` is `neutral` for default if it exists, if the application supports emotions. if `type` is `user_icon`, `name` *SHOULD* be used as a name of the user. if `type` is `icon`, and `name` is `main`, the application *MUST* use the asset as the main icon of the character card if icon is supported on the application. if there is more then one elements with `type` field is `icon`, there *MUST* be one element with `name` field is `main`, this *MUST NOT* be less or more than one. if `type` is `background`, and `name` is `main`, the application *MUST* use the asset as the main background of the character card if background is supported on the application. if there is more then one elements with `type` field is `background`, there *MUST* not be more than one element with `name` field is `main` with `background` type. if there is no element with `name` field is `main` with `background` type, the application *SHOULD* use the first element with `background` type as the main background.
 
 for other types, it is up to the application how to use and write the name field. for example, `name` field *MAY* be used as a name of the background like `forest`, `city`, `space` etc.
 
@@ -218,11 +218,11 @@ Applications can decide what format to support. however, applications *SHOULD* s
 
 If the applicaiton determines that the asset is not valid or accessible or does not support the feature that the asset is used for, the application *MAY* ignore the asset, but the application *SHOULD* keep the asset data so it can be exported safely. if it is impossible or hard to save the asset data, the application *MAY* not save the asset data and do not export the asset data when exporting the CharacterCard object, but it *MUST* alert the user that the asset is not saved.
 
-applications *MAY* add more types of assets, but added types *SHOULD* start with `x_` to prevent conflicts with the types defined in the specification. (Not compatible with Risu)
+applications *MAY* add more types of assets, but added types *SHOULD* start with `x_` to prevent conflicts with the types defined in the specification. (Not compatible with Risu, need to mitigate this issue.)
 
-### Error Fallback
+#### Error Fallback
 
-
+when `item.type in ext_list == False`, drop item
 
 ### `group_only_greetings`
 
