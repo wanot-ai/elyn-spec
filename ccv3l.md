@@ -1,6 +1,6 @@
-# Character Card V3 Specification
+# Character Card V3 for Lynn Specification
 
-This document describes the Character Card V3 specification (shorted as CCv3).
+This document describes the Character Card V3 specification for Lynn (shorted as CCv3L).
 
 # Keywords
 
@@ -11,7 +11,7 @@ This document describes the Character Card V3 specification (shorted as CCv3).
 - *MAY*: This word, or the adjective "OPTIONAL", mean that an item is truly optional.
 - *MAY NOT*: This phrase, or the adjective "forbidden", mean that an item is truly optional.
 - *IN ANY CASE*: This phrase mean that the application must do the action described in the sentence in any case, even it violates the other rules in the specification.
-- Application: The application that uses the Character Card V3 specification.
+- Application: **Lynn**.
 - Character Editor: The editor that is used to create and edit the Character Card V3 objects.
 - Creator Note: The note that are *SHOULD* be very discoverable for bot user.
 - regex pattern: A Regular Expression pattern that is used to match the text, for example, `/hello/i`.
@@ -19,7 +19,8 @@ This document describes the Character Card V3 specification (shorted as CCv3).
 
 # Embedding Methods
 
-## PNG/APNG
+*Only Accept CharX ~ PoC*
+<!-- ## PNG/APNG
 
 CharacterCardV3 objects could be embedded in PNG or APNG files. The CharacterCardV3 object *MUST* be embedded in the PNG or APNG file as a tEXt chunk. The tEXt chunk *MUST* be named `ccv3` and the value of the tEXt chunk *MUST* be the JSON string of the CharacterCardV3 object, with utf-8 -> base64 encoding.
 
@@ -31,7 +32,7 @@ PNG/APNG files *MAY* have additional tEXt chunks that works like assets embedded
 
 ## JSON
 
-CharacterCardV3 objects could be embedded in JSON files. The JSON file *MUST* be a CharacterCardV3 object.
+CharacterCardV3 objects could be embedded in JSON files. The JSON file *MUST* be a CharacterCardV3 object. -->
 
 ## CHARX
 
@@ -50,13 +51,20 @@ CHARX file *SHOULD* follow this rule saving the assets:
 
 This *MUST NOT* taken to mean that the application must support these features and the directories would exist always.
 
-How {type} is determined *SHOULD* be where the asset is used. If the asset is used as a icon, the {type} *SHOULD* be `icon`. if the asset is used as a background, the {type} *SHOULD* be `background`. if the asset is used as a emotion, the {type} *SHOULD* be `emotion`. if the asset is used as a user icon, the {type} *SHOULD* be `user_icon`. if the asset is used as a other type of asset, the {type} *SHOULD* be `other`. platform specific assets *MAY* use platform specific {type}.
+How {type} is determined *MUST* be where the asset is used. If the asset is used as a icon, the {type} *MUST* be `icon`. if the asset is used as a background, the {type} *MUST* be `background`. if the asset is used as a emotion, the {type} *MUST* be `emotion`. if the asset is used as a user icon, the {type} *MUST* be `user_icon`. if the asset is used as a other type of asset, the {type} *MUST* be `other`. platform specific assets *MUST* use platform specific {type}.
 
-Application specific data can be stored as a JSON file in root of the zip file. frontends *MAY* use this file to store the data that is not related to the CharacterCardV3 object.
+Application specific data *MUST* be stored as a JSON file in root of the zip file. ~~frontends *MAY* use this file to store the data that is not related to the CharacterCardV3 object.~~
 
-Zip file *SHOULD NOT* be encrypted and *SHOULD* only use characters inside ASCII range for the file name and the file path inside the zip file to prevent compatibility issues.
+Zip file *MUST NOT* be encrypted and *MUST* only use characters inside ASCII range for the file name and the file path inside the zip file to prevent compatibility issues.
 
+*More details soon*
 Application's *MAY* reject the CHARX file if the file is too large, or the file is corrupted, or the file is not a valid zip file, or the file is encrypted and the application does not support decryption, or the file is encrypted and the password is incorrect or something else that the application does not support.
+
+### Type
+*TBD*
+
+### Extension
+*TBD*
 
 # JSON Objects in Character Card V3
 
@@ -84,18 +92,20 @@ interface CharacterCardV3{
     character_version: string
     mes_example: string
     extensions: Record<string, any>
-    system_prompt: string
-    post_history_instructions: string
-    first_mes: string
-    alternate_greetings: Array<string>
-    personality: string
-    scenario: string
 
-    //Changes from CCV2
+    // Deprecated from CCV2
+    // system_prompt: string
+    // post_history_instructions: string
+    // first_mes: string
+    // alternate_greetings: Array<string>
+    // personality: string
+    // scenario: string
+
+    // Changes from CCV2
     creator_notes: string
     character_book?: Lorebook
 
-    //New fields in CCV3
+    // New fields in CCV3
     assets?: Array<{
       type: string
       uri: string
@@ -112,9 +122,9 @@ interface CharacterCardV3{
 }
 ```
 
-For future versions of the specification, the application *SHOULD* ignore the fields that are not present in the specification, but not reject the import of CharacterCard object. The application *MAY* save the fields that are not present in the specification so it can be exported safely.
+~~For future versions of the specification,~~ The application *MUST* ignore the fields that are not present in the specification, but not reject the import of CharacterCard object. The application *MUST NOT* save the fields that are not present in the specification. ~~so it can be exported safely.~~
 
-`system_prompt`, `post_history_instructions`, `first_mes`, `alternate_greetings`, `personality`, `scenario` fields from Character Card V2 are removed from the CharacterCard object in Character Card V3. However, the application *MAY* save these fields for backward compatibility with Character Card V2. However, the application *MUST NOT* use these fields if its loaded as Character Card V3.
+`system_prompt`, `post_history_instructions`, `first_mes`, `alternate_greetings`, `personality`, `scenario` fields from Character Card V2 are removed from the CharacterCard object in Character Card V3. However, the application *MUST NOT* save these fields. ~~for backward compatibility with Character Card V2. However, the application *MUST NOT* use these fields if its loaded as Character Card V3.~~
 
 This *MUST* not taken to mean that the application can add their own fields to the CharacterCard object. The application *MUST* follow the specification. for application specific data, the application *MAY* save the data in the `extensions` field, which is specified in V2 specification.
 
@@ -124,19 +134,21 @@ The value for this field *MUST* be `"chara_card_v3"`. applications *SHOULD NOT* 
 
 ### `spec_version`
 
-The value for this field *MUST* be `"3.0"`. This field is used to determine the version of the Character Card object. applications *SHOULD NOT* reject the Character Card object if the value of this field is not equal to `"3.0"` for backward compatibility and future versions of the specification.
+The value for this field *MUST* be `"3.0"`. This field is used to determine the version of the Character Card object. applications *MUST* reject the Character Card object if the value of this field is not equal to `"3.0"`. ~~for backward compatibility and future versions of the specification.~~
 
-How the `spec_version` is determined as a newer version is by parsing the string as a float. if the float is bigger than `3.0`, the application *SHOULD* consider the Character Card object as a newer version of the specification. if the float is smaller than `3.0`, the application *SHOULD* consider the Character Card object as an older version of the specification.
+*ONLY ACCEPT 3.0 for now.*
+*This is to change after Lynn PoC*
+~~How the `spec_version` is determined as a newer version is by parsing the string as a float. if the float is bigger than `3.0`, the application *SHOULD* consider the Character Card object as a newer version of the specification. if the float is smaller than `3.0`, the application *SHOULD* consider the Character Card object as an older version of the specification.~~
 
-If the application does not support the newer version of the specification, the application *SHOULD* alert the user that the Character Card object is created with a newer version of the specification, and the application *MAY* not support the new features that are added in the newer version of the specification. however, the application *SHOULD* support importing of it.
+If the application does not support the newer version of the specification, the application *MUST* alert the user that the Character Card object is created with a newer version of the specification. ~~and the application *MAY* not support the new features that are added in the newer version of the specification.~~ however, the application *MUST NOT* support importing of it.
 
-If the application is older than the version of the specification, the application *SHOULD* fill the missing fields with default values. default fields are:
+~~If the application is older than the version of the specification, the application *SHOULD* fill the missing fields with default values. default fields are:~~
 
 - Since version `"3.0"` is the first version of the specification, this wouldn't happen on this version of the specification. no default fields are defined.
 
 ### `character_book`
 
-The value of this field *MUST* be a Lorebook object or undefined. if this field is present, the application *SHOULD* consider this field as a character specific lorebook. applications MUST use the character lorebook by default and Character editors MUST save character lorebooks in the specified format. Character lorebook *SHOULD* stacked with can be defined as a global lorebook.
+The value of this field *MUST* be a Lorebook object or undefined. if this field is present, the application *MUST* consider this field as a character specific lorebook. applications *MUST* use the character lorebook by default and Character editors MUST save character lorebooks in the specified format. ~~Character lorebook *SHOULD* stacked with can be defined as a global lorebook.~~ (need to seperate from global lorebook.)
 
 ### `creator_notes`
 
