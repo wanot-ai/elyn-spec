@@ -2,11 +2,6 @@
 
 This document describes the Character Card V3 specification for Lynn (shorted as CCv3L).
 
-# General Code Rule for Lynn
-
-- When the function is *NOT* case-sensitive handle `String` as uppercase.
-- All *NONE* network functions must be done under 25ms. (M1 Mac, Safari)
-
 # Keywords
 
 - *MUST*: This word, or the terms "REQUIRED" or "SHALL", mean that the definition is an absolute requirement of the specification.
