@@ -2,6 +2,11 @@
 
 This document describes the Character Card V3 specification for Lynn (shorted as CCv3L).
 
+# General Code Rule for Lynn
+
+- When the function is *NOT* case-sensitive handle `String` as uppercase.
+- All *NONE* network functions must be done under 25ms. (M1 Mac, Safari)
+
 # Keywords
 
 - *MUST*: This word, or the terms "REQUIRED" or "SHALL", mean that the definition is an absolute requirement of the specification.
@@ -36,7 +41,7 @@ CharacterCardV3 objects could be embedded in JSON files. The JSON file *MUST* be
 
 ## CHARX
 
-CharacterCardV3 objects could be embedded in CHARX files. The CHARX file is a file format that is used to store the CharacterCardV3 object. The CHARX file is a zip file that contains the CharacterCardV3 object as a JSON file, and with other assets embedded. The CHARX file *MUST* have a JSON file that contains the CharacterCardV3 object. The JSON file *MUST* be named `card.json` at the root of the zip file. . the assets embedded in the CHARX file can be accessed by `embeded://path/to/asset.png` URI (Not `embedded://`). the path is case sensitive, and sepearated by `/`. CHARX file uses `.charx` file extension.
+CharacterCardV3 objects could be embedded in CHARX files. The CHARX file is a file format that is used to store the CharacterCardV3 object. The CHARX file is a zip file that contains the CharacterCardV3 object as a JSON file, and with other assets embedded. The CHARX file *MUST* have a JSON file that contains the CharacterCardV3 object. The JSON file *MUST* be named `card.json` at the root of the zip file. . the assets embedded in the CHARX file can be accessed by `embedded://path/to/asset.png` URI (Not `embedded://`). the path is case sensitive, and sepearated by `/`. CHARX file uses `.charx` file extension.
 
 CHARX file *SHOULD* follow this rule saving the assets:
 - if the asset is a image like `.png` or `.avif`, the asset *SHOULD* be saved at 'assets/{type}/images/' directory.
@@ -152,19 +157,22 @@ The value of this field *MUST* be a Lorebook object or undefined. if this field 
 
 ### `creator_notes`
 
-The value of this field *MUST* be a string. this value *MUST* considered as creator notes if `creator_notes_multilingual` is undefined. if `creator_notes_multilingual` is present, the application *SHOULD* considered this as a creator note for `en` language, if `creator_notes_multilingual` does not have a key for `en` language. if is not, the application *SHOULD* ignore this field.
+*it might get changed soon*
+The value of this field *MUST* be a string. this value *MUST* considered as creator notes if `creator_notes_multilingual` is undefined. if `creator_notes_multilingual` is present, the application *MUST* consider this as a creator note for `en` language, if `creator_notes_multilingual` does not have a key for `en` language. if is not, the application *MUST* ignore this field.
 
 ### `nickname`
 
-The value of this field *MUST* be a string or undefined. if the value is present, the syntax `{{char}}`, `<char>` and `<bot>` *SHOULD* be replaced with the value of this field in the prompt instead of the `name` field.
+The value of this field *MUST* be a string or undefined. if the value is present, the syntax `{{char}}`, `<char>` and `<bot>` *MUST* be replaced with the value of this field in the prompt instead of the `name` field.
 
 ### `creator_notes_multilingual`
 
-The value of this field *MUST* be a object or undefined. if this field is present, the application *MUST* consider this field as a multilingual creator notes. the key of the object *MUST* be a language code in ISO 639-1, without region code. the value of the object *MUST* be a string. the application *SHOULD* display the creator notes in the language that the user's client is set to. the application *MAY* provide language selection for creator notes.
+*it might get changed soon*
+The value of this field *MUST* be a object or undefined. if this field is present, the application *MUST* consider this field as a multilingual creator notes. the key of the object *MUST* be a language code in ISO 639-1, without region code. the value of the object *MUST* be a string. the application *MUST* display the creator notes in the language that the user's client is set to. the application *MUST* provide language selection for creator notes.
 
 ### `source`
 
-the value of this field *MUST* be a array string or undefined. if the value is present, the application *SHOULD* determine as an array of the ID or a HTTP/HTTPS URL that points to the source of the character card.
+*it might get changed soon*
+the value of this field *MUST* be a array string or undefined. if the value is present, the application *MUST* determine as an array of the ID or a HTTPS URL that points to the source of the character card.
 
 The field *SHOULD NOT* be editable by the user. If the `source` is a URI, the application *MAY* provide a way to open the value of the `source` field in a new tab.
 
@@ -185,7 +193,7 @@ The value of this field *MUST* be an array of objects or undefined. if this fiel
 }]
 ```
 
-the value *SHOULD* be determine as an array of character's assets. the object *MUST* have a `type` field and a `uri` field and a `name` field and a `uri` ext. the `type` field *MUST* be a string, and the `uri` field *MUST* be a string. the `type` field *MUST* be a type of the asset. the `uri` field *MUST* be a HTTP or HTTPS URL of the asset or base64 data URL or 'path for embedded assets' or `ccdefault:`. how the path for embedded assets formated *SHOULD* follow this format: `embeded://path/to/asset.png`. this format is case sensitive, and sepearated by `/`. if the URI field is `ccdefault:`, the application *SHOULD* use the default asset for the type. how the default asset is determined is up to the application except it is specified in the specification. if the URI field is HTTP or HTTPS URL or base64 data URL, the application *SHOULD* use the asset from the URL. applications *MAY* ignore elements with HTTP url in the `uri` which isn't HTTPS for security reasons. applications *MAY* check if the asset URI is valid and the asset is accessible. applications *MAY* ignore base64 data URLs if the application does not support the format of the asset, or the asset is too large. applications *MAY* add more URI type support like `file://`, `ftp://` etc. but the URI type *SHOULD* be a valid URI type. and if the URI type is not supported by the application, the application *MAY* ignore the asset. however, the application *SHOULD* support `embeded://` and `ccdefault:` URI types which are defined in the specification.
+the value *MUST* be determine as an array of character's assets. the object *MUST* have a `type` field and a `uri` field and a `name` field and a `uri` ext. the `type` field *MUST* be a string, and the `uri` field *MUST* be a string. the `type` field *MUST* be a type of the asset. the `uri` field *MUST* be a HTTPS URL of the asset or 'path for embedded assets'. how the path for embedded assets formated *SHOULD* follow this format: `embedded://path/to/asset.png`. this format is case sensitive, and sepearated by `/`. if the URI field is `ccdefault:`, the application *SHOULD* use the default asset for the type. how the default asset is determined is up to the application except it is specified in the specification. if the URI field is HTTP or HTTPS URL or base64 data URL, the application *SHOULD* use the asset from the URL. applications *MAY* ignore elements with HTTP url in the `uri` which isn't HTTPS for security reasons. applications *MAY* check if the asset URI is valid and the asset is accessible. applications *MAY* ignore base64 data URLs if the application does not support the format of the asset, or the asset is too large. applications *MAY* add more URI type support like `file://`, `ftp://` etc. but the URI type *SHOULD* be a valid URI type. and if the URI type is not supported by the application, the application *MAY* ignore the asset. however, the application *SHOULD* support `embedded://` and `ccdefault:` URI types which are defined in the specification.
 
 Where the each assets would be used is determined by the `type` field. 
 - If the `type` field is `icon`, the asset *SHOULD* be used as an icon or protrait of the character. if one of the assets is `icon` type, the application *SHOULD* use the asset as the icon of the character card. if there is multiple `icon` type assets, the application *SHOULD* use the main icon or let the user choose the icon, or change dynamically by the application. how the main icon choosed is below on the specification. if `uri` field is `ccdefault:`, and the card is PNG/APNG embedded, `ccdefault:` *SHOULD* point the PNG/APNG file itself or modified version of the PNG/APNG file.
