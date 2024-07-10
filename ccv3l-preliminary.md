@@ -16,6 +16,16 @@ This document describes the Character Card V3 specification for Lynn (shorted as
 - Creator Note: The note that are *SHOULD* be very discoverable for bot user.
 - regex pattern: A Regular Expression pattern that is used to match the text, for example, `/hello/i`.
 
+# Sequence of run
+
+Application *MUST* follow this sequence when processing Character Card if element exists below.
+
+1. `creation_date`
+2. `modification_date`
+
+# Global Variables
+
+`ext_list` - List of compatible file extensions.
 
 # Embedding Methods
 
@@ -81,6 +91,7 @@ The CharacterCardV3 object can be described as this typescript interface:
 ```ts
 
 interface CharacterCardV3{
+  // Still handled as chara_card_v3 since it is unidirectional(CCv3 -> CCv3L) fully compatible and bidirectional partly compatible.
   spec: 'chara_card_v3'
   spec_version: '3.0'
   data: {
@@ -207,18 +218,34 @@ Applications can decide what format to support. however, applications *SHOULD* s
 
 If the applicaiton determines that the asset is not valid or accessible or does not support the feature that the asset is used for, the application *MAY* ignore the asset, but the application *SHOULD* keep the asset data so it can be exported safely. if it is impossible or hard to save the asset data, the application *MAY* not save the asset data and do not export the asset data when exporting the CharacterCard object, but it *MUST* alert the user that the asset is not saved.
 
-applications *MAY* add more types of assets, but added types *SHOULD* start with `x_` to prevent conflicts with the types defined in the specification.
+applications *MAY* add more types of assets, but added types *SHOULD* start with `x_` to prevent conflicts with the types defined in the specification. (Not compatible with Risu)
+
+### Error Fallback
+
+
 
 ### `group_only_greetings`
 
 The value of this field *MUST* be an array of string. this field *MUST* be present. this field *MAY* be empty array. this field *MUST* be used to define the greetings that the character card would use.
 
-This value *SHOULD* be considered as the additional greetings that the character card would use, only for group chats.
+This value *MUST* be considered as the additional greetings that the character card would use, only for group chats.
+
+#### Error Fallback
+
+when `group_only_greetings.value == False`, override `group_only_greetings.value = []`
 
 ### `creation_date`
 
 The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the creation date of the character card. the value *MUST* be a unix timestamp in seconds. application *SHOULD* add this field when the character card is created. application *SHOULD NOT* allow the user to edit this field. application *SHOULD NOT* modify this field if the value is already present. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the creation date is unknown for privacy reasons and more.
 
+#### Error Fallback
+
+when `type: creation_date.value != Number`, override `creation_date.value = currentUnixTime`
+
 ### `modification_date`
 
-The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the modification date of the character card. the value *MUST* be a unix timestamp in seconds. application *SHOULD* add or modify this field when the character card is exported, and *MAY* modify this field when the character card is modified. application *SHOULD NOT* allow the user to edit this field. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the modification date is unknown for privacy reasons and more.
+The value of this field *MUST* be a number. this field is be used to determine the modification date of the character card. the value *MUST* be a unix timestamp in seconds. application *MUST* add or modify this field when the character card is modified — not when exported, and *MAY* modify this field when the character card is modified. application *SHOULD NOT* allow the user to edit this field. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the modification date is unknown for privacy reasons and more.
+
+#### Error Fallback
+
+when `type: modification_date.value != Number`, override `modification_date.value = creation_date.value`
