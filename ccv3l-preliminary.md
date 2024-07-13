@@ -74,7 +74,20 @@ Application's *MAY* reject the CHARX file if the file is too large, or the file 
 *TBD*
 
 ### Extension
-*TBD*
+This field **MUST** default to an empty object ({}).
+
+This field **MAY** contain any arbitrary JSON key-value pair.
+
+Character editors **MUST NOT** destroy unknown key-value pairs when importing and exporting character cards.
+
+Applications **MAY** store any unspecified data in this object.
+(HyperBlaze's note, NO. don't do that, and applications don't do that either)
+
+Applications **SHOULD** namespace any key they use to prevent conflicts, e.g. "agnai/voice": /* ... */ or "agnai_voice": /* ... */ or "agnai": { "voice": /* ... */ }".
+
+fyi:
+Currently, RisuAI's custom scripts, including regex, triggerscripts, luascript, code field are ALL in here.
+
 
 # JSON Objects in Character Card V3
 
