@@ -102,12 +102,12 @@ interface CharacterCardV3{
     creator: string
     character_version: string
     mes_example: string
+    first_mes: Array<string>
     extensions: Record<string, any>
 
     // Deprecated from CCV2
     // system_prompt: string
     // post_history_instructions: string
-    // first_mes: string
     // alternate_greetings: Array<string>
     // personality: string
     // scenario: string
