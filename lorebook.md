@@ -9,7 +9,7 @@ The Lorebook object can be described as this typescript interface:
 type Lorebook = {
   name?: string
   description?: string
-  scan_depth?: number 
+  scan_depth?: number
   token_budget?: number
   recursive_scanning?: boolean
   extensions: Record<string, any>
