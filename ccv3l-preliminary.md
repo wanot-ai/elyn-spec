@@ -91,7 +91,6 @@ The CharacterCardV3 object can be described as this typescript interface:
 ```ts
 
 interface CharacterCardV3{
-  // Still handled as chara_card_v3 since it is unidirectional(CCv3 -> CCv3L) fully compatible and bidirectional partly compatible.
   spec: 'chara_card_v3'
   spec_version: '3.0'
   data: {
@@ -101,19 +100,12 @@ interface CharacterCardV3{
     tags: Array<string>
     creator: string
     character_version: string
-    mes_example: string
-    first_mes: Array<string>
+    example_messages: Array<string>
+    first_messages: Array<string>
     extensions: Record<string, any>
 
-    // Deprecated from CCV2
-    // system_prompt: string
-    // post_history_instructions: string
-    // alternate_greetings: Array<string>
-    // personality: string
-    // scenario: string
-
     // Changes from CCV2
-    creator_notes: string
+    creator_notes: Array<CreatorNote>
     character_book?: Lorebook
 
     // New fields in CCV3
@@ -124,12 +116,14 @@ interface CharacterCardV3{
       ext: string
     }>
     nickname?: string
-    creator_notes_multilingual?: Record<string, string>
-    source?: string[]
-    group_only_greetings: Array<string>
     creation_date?: number
     modification_date?: number
   }
+}
+
+interface CreatorNote{
+  locale: string
+  content: string
 }
 ```
 
