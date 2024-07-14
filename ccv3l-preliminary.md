@@ -113,12 +113,13 @@ interface CharacterCardV3{
     tags: Array<string>
     creator: string
     character_version: string
-    example_messages: Array<string>
-    first_messages: Array<string>
+    example_messages: Array<string> // split mes_example accordingly
+    first_messages: Array<string> // concat first_mes and alternate_greetings
     extensions: Record<string, any>
-
+	// system prompt, post_history_instructions, personality, scenario will be ignored
+    
     // Changes from CCV2
-    creator_notes: Array<CreatorNote>
+    creator_notes: Array<CreatorNote> // concat creator_notes, creator_notes_multilingual. since creator_notes_multilingual are a Record<string, string>, need to change this to as a CreatorNote interface.
     character_book?: Lorebook
 
     // New fields in CCV3
@@ -128,6 +129,8 @@ interface CharacterCardV3{
       name: string
       ext: string
     }>
+    // source, group_only_greetings are removed
+    // Further, we can move group_only_greetings differently. Let's say exporting it as a different type
     nickname?: string
     creation_date?: number
     modification_date?: number
@@ -138,6 +141,7 @@ interface CreatorNote{
   locale: string
   content: string
 }
+
 ```
 
 ~~For future versions of the specification,~~ The application *MUST* ignore the fields that are not present in the specification, but not reject the import of CharacterCard object. The application *MUST NOT* save the fields that are not present in the specification. ~~so it can be exported safely.~~
