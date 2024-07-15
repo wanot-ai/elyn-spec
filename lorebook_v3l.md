@@ -15,20 +15,19 @@ type Lorebook = {
   extensions: Record<string, any>
   entries: Array<{
     keys: Array<string>
-    secondary_keys?: Array<string>
-    selective?: boolean // option to enable secondary key
+    secondary_keys: Array<string>
+    selective: boolean // option to enable secondary key
     content: string
     extensions: Record<string, any>
     enabled: boolean
     insertion_order: number
-    case_sensitive?: boolean
-    constant?: boolean
+    case_sensitive: boolean
+    constant: boolean
 
-    // Optional Fields
-    name?: string
-    priority?: number
-    id?: number
-    comment?: string
+    name: string
+    priority: number
+    id: string
+    comment: string
   }>
 }
 ```
