@@ -104,7 +104,7 @@ Content field can contain decorators. If the content field contains decorators, 
 
 ### `enabled`
 
-The value of this field *MUST* be a boolean. if this value is false, the lorebook field *MUST NOT* be considered as a match IN ANY CASE.
+The value of this field *MUST* be a boolean. if this value is false, the lorebook field *MUST NOT* be considered as a match IN ANY CASE. when pushed to r2 server only enabled entries are accepted.
 
 ### `insertion_order`
 
@@ -120,7 +120,7 @@ The value of this field *MUST* be a boolean or undefined. if this value is true,
 
 ### `constant`
 
-Always enabled.
+if entry always enabled.
 
 ## Optional `entries` Fields
 
