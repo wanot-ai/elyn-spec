@@ -104,7 +104,7 @@ The CharacterCardV3 object can be described as this typescript interface:
 ```ts
 
 interface CharacterCardV3{
-  spec: 'chara_card_v3'
+  spec: 'chara_card_v3l'
   spec_version: '3.0'
   data: {
     // fields from CCV2
