@@ -2,6 +2,8 @@
 
 lynn 구현에 대한 스펙 문서
 
+# WORK IN PROGRESS
+
 ---
 
 CCv3L, Lorebook, 프롬프팅 서버 + 를 포함
