@@ -6,28 +6,27 @@ Lorebook object is a JSON object that contains the information about the loreboo
 
 The Lorebook object can be described as this typescript interface:
 ```ts
-type Lorebook = {
+interface Lorebook {
   name?: string
   description?: string
-  scan_depth?: number
   token_budget?: number
-  recursive_scanning?: boolean
+  scan_depth: number
+  recursive_scanning: boolean
   extensions: Record<string, any>
   entries: Array<{
+    id: string
+    name: string
+    description: string
+    content: string
     keys: Array<string>
     secondary_keys: Array<string>
-    selective: boolean // option to enable secondary key
-    content: string
-    extensions: Record<string, any>
-    enabled: boolean
+    use_secondary: boolean
+    priority: number
     insertion_order: number
     case_sensitive: boolean
     constant: boolean
-
-    name: string
-    priority: number
-    id: string
-    comment: string
+    enabled: boolean
+    extensions: Record<string, any>
   }>
 }
 ```
