@@ -113,13 +113,14 @@ interface CharacterCardV3{
     tags: Array<string>
     creator: string
     character_version: string
-    example_messages: Array<string> // split mes_example accordingly
+    example_messages: Array<Record<string, string>> // OAI Style example.
     first_messages: Array<string> // concat first_mes and alternate_greetings
     extensions: Record<string, any>
 	// system prompt, post_history_instructions, personality, scenario will be ignored
     
     // Changes from CCV2
     creator_notes: Array<CreatorNote> // concat creator_notes, creator_notes_multilingual. since creator_notes_multilingual are a Record<string, string>, need to change this to as a CreatorNote interface.
+    guidance_note: string
     character_book?: Lorebook
 
     // New fields in CCV3
