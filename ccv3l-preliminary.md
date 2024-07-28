@@ -113,7 +113,7 @@ interface CharacterCardV3{
     tags: Array<string>
     creator: string
     character_version: string
-    example_messages: Array<Record<string, string>> // OAI Style example.
+    example_messages: Array<Array<Record<string, string>>> // OAI Style example.
     first_messages: Array<string> // concat first_mes and alternate_greetings
     extensions: Record<string, any>
 	// system prompt, post_history_instructions, personality, scenario will be ignored
