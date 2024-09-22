@@ -114,7 +114,7 @@ interface CharacterCardV3{
     creator: string
     character_version: string
     example_messages: Array<Array<Record<string, string>>> // OAI Style example.
-    first_messages: Array<string> // concat first_mes and alternate_greetings
+    first_messages: Array<firstMessage> // concat first_mes and alternate_greetings
     extensions: Record<string, any>
 	// system prompt, post_history_instructions, personality, scenario will be ignored
     
@@ -141,6 +141,11 @@ interface CharacterCardV3{
 interface CreatorNote{
   locale: string
   content: string
+}
+
+interface firstMessage{
+  locale: string
+  messages: Array<string>
 }
 
 ```
